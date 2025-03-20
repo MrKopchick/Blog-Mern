@@ -14,7 +14,7 @@ app.use(express.json());
 mongoose
     .connect('mongodb+srv://illya:12345678Admin@cluster0.podna.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0')
     .then(()=>{console.log("монгос подключился. заебись")})
-    .catch(err => {console.log("монгос отьебнулся" + err)});
+    .catch(err => {console.log("монгос отьебнулся " + err)});
 
 // registration
 app.post ('/auth/register', registerValidaton, async (req, res) => {
@@ -87,6 +87,7 @@ app.post ('/auth/login', async (req, res) => {
     }
 });
 
+// get me
 app.get('/auth/me', checkAuth , async (req, res) => {
     try{
         res.json({
@@ -99,7 +100,7 @@ app.get('/auth/me', checkAuth , async (req, res) => {
     }
 });
 
-app.listen(3001, () => { 
+app.listen(3002, () => { 
     try{
         console.log("сервер заработал. заебись");
     }catch(err){
