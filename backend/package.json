@@ -2,15 +2,19 @@
   "name": "blog-mern-backend",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "test"
+    "start:dev": "nodemon index.js"
   },
   "author": "MrKoptyara",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "express": "^4.21.2",
+    "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.12.1",
     "nodemon": "^3.1.9"
   }
 }
