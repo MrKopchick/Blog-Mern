@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import { registerValidaton, loginValidaton } from './validations/authValidations.js';
-import { postCreateValidation } from './validations/postValidations.js';
+import { postValidation } from './validations/postValidations.js';
 
 import * as UserController from './controllers/UserController.js';
 import * as PostController from './controllers/PostController.js';
@@ -29,7 +29,7 @@ app.get('/auth/me', checkAuth , UserController.getMe);
 // POSTS
 app.get('/posts', PostController.getAll);
 app.get('/posts/:id', PostController.getOne);
-app.post('/posts',checkAuth, postCreateValidation, PostController.create);
+app.post('/posts',checkAuth, postValidation, PostController.create);
 app.delete('/posts/:id',checkAuth, PostController.remove);
 app.patch('/posts', checkAuth, PostController.update);
 
