@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { registerValidaton } from './validations/auth.js';
+import { registerValidaton, loginValidaton } from './validations/authValidations.js';
 import checkAuth from './utils/checkAuth.js';
 import * as UserController from './controllers/UserController.js';
 
@@ -14,10 +14,11 @@ mongoose
     .catch(err => {console.log("монгос отьебнулся " + err)});
 
 
-// AUTH
 
+    
+// AUTH
 // login
-app.post ('/auth/login', UserController.login);
+app.post ('/auth/login', loginValidaton, UserController.login);
 // registration
 app.post ('/auth/register', registerValidaton, UserController.register);
 // get me
@@ -27,8 +28,8 @@ app.get('/auth/me', checkAuth , UserController.getMe);
 // start server
 app.listen(3002, () => { 
     try{
-        console.log("сервер заработал. заебись");
+        console.log("сервер заработал (ノ^_^)ノ. порт 3002");
     }catch(err){
-        console.log("пизда...:" + err);
+        console.log(err);
     }
 });
