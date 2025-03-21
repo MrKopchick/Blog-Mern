@@ -1,4 +1,5 @@
 import express from 'express';
+import multer from 'multer';
 import mongoose from 'mongoose';
 
 import { registerValidaton, loginValidaton } from './validations/authValidations.js';
@@ -10,21 +11,37 @@ import * as PostController from './controllers/PostController.js';
 import checkAuth from './utils/checkAuth.js';
 
 const app = express();
+
+const storage = multer.diskStorage({
+    destination: (_, _, cb) => {
+        cb(null, 'uploads'); 
+    },
+    filename: (_, file, cb) => {
+        cb(null, file.originalname);
+    }
+});
+
+const upload = multer({ storage });
+
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 // connect to db
 mongoose
     .connect('mongodb+srv://illya:12345678Admin@cluster0.podna.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0')
     .then(()=>{console.log("монгос подключился. заебись")})
     .catch(err => {console.log("монгос отьебнулся " + err)});
-
-
-    
     
 // AUTH
 app.post ('/auth/login', loginValidaton, UserController.login);
 app.post ('/auth/register', registerValidaton, UserController.register);
 app.get('/auth/me', checkAuth , UserController.getMe);
+
+app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+    res.json({
+        url: `/upload/${req.file.originalname}`
+    });
+});
 
 // POSTS
 app.get('/posts', PostController.getAll);
