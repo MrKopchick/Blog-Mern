@@ -1,8 +1,8 @@
 import { body } from 'express-validator';
 
-export const registerValidaton = [
-    body('email', 'не вірний формат почти').isEmail(),
-    body('password', 'пароль повинен містити мінімум 5 символів ').isLength({min: 6}),
-    body('fullName', `вкажіть ім'я`).isLength({min: 3}),
-    body('avatarUrl', 'не вірне посилання на аватар').optional().isURL()
-]
+export const postValidaton = [
+    body('title', 'Введіть заголовок').isLength({min: 3}).isString(),
+    body('text', 'Введіть текст статі').isLength({min: 3}).isString(),
+    body('tags', `невірний формат тегів`).optional().isString(),
+    body('imageUrl', 'не вірне посилання на зображення').optional().isString()
+];
