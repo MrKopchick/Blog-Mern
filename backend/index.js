@@ -1,8 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
+
 import { registerValidaton, loginValidaton } from './validations/authValidations.js';
-import checkAuth from './utils/checkAuth.js';
+import { postCreateValidation } from './validations/postValidations.js';
+
 import * as UserController from './controllers/UserController.js';
+import * as PostController from './controllers/PostController.js';
+
+import checkAuth from './utils/checkAuth.js';
 
 const app = express();
 app.use(express.json());
@@ -14,16 +19,19 @@ mongoose
     .catch(err => {console.log("монгос отьебнулся " + err)});
 
 
-
+    
     
 // AUTH
-// login
 app.post ('/auth/login', loginValidaton, UserController.login);
-// registration
 app.post ('/auth/register', registerValidaton, UserController.register);
-// get me
 app.get('/auth/me', checkAuth , UserController.getMe);
 
+// POSTS
+app.get('/posts', PostController.getAll);
+app.get('/posts/:id', PostController.getOne);
+app.post('/posts',checkAuth, postCreateValidation, PostController.create);
+app.delete('/posts/:id',checkAuth, PostController.remove);
+app.patch('/posts', checkAuth, PostController.update);
 
 // start server
 app.listen(3002, () => { 
