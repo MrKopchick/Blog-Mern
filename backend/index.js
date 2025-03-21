@@ -2,13 +2,10 @@ import express from 'express';
 import multer from 'multer';
 import mongoose from 'mongoose';
 
-import { registerValidaton, loginValidaton } from './validations/authValidations.js';
-import { postValidation } from './validations/postValidations.js';
+import {loginValidaton, registerValidaton, postValidation} from './validations/index.js';
+import { handleValidationErrors, checkAuth } from './utils/index.js';
+import {UserController, PostController} from './controllers/index.js';
 
-import * as UserController from './controllers/UserController.js';
-import * as PostController from './controllers/PostController.js';
-
-import checkAuth from './utils/checkAuth.js';
 
 const app = express();
 
@@ -29,12 +26,12 @@ app.use('/uploads', express.static('uploads'));
 // connect to db
 mongoose
     .connect('mongodb+srv://illya:12345678Admin@cluster0.podna.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0')
-    .then(()=>{console.log("монгос подключился. заебись")})
-    .catch(err => {console.log("монгос отьебнулся " + err)});
+    .then(()=>{console.log("mongodb connected: (ノ^_^)ノ")})
+    .catch(err => {console.log("bruh mongo: " + err)});
     
 // AUTH
-app.post ('/auth/login', loginValidaton, UserController.login);
-app.post ('/auth/register', registerValidaton, UserController.register);
+app.post ('/auth/login',  loginValidaton, handleValidationErrors,UserController.login);
+app.post ('/auth/register',  registerValidaton, handleValidationErrors, UserController.register);
 app.get('/auth/me', checkAuth , UserController.getMe);
 
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
@@ -53,7 +50,7 @@ app.patch('/posts', checkAuth, PostController.update);
 // start server
 app.listen(3002, () => { 
     try{
-        console.log("сервер заработал (ノ^_^)ノ. порт 3002");
+        console.log("server started (ノ^_^)ノ. port 3002");
     }catch(err){
         console.log(err);
     }
