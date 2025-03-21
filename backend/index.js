@@ -26,8 +26,8 @@ app.use('/uploads', express.static('uploads'));
 // connect to db
 mongoose
     .connect('mongodb+srv://illya:12345678Admin@cluster0.podna.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0')
-    .then(()=>{console.log("монгос подключился. заебись")})
-    .catch(err => {console.log("монгос отьебнулся " + err)});
+    .then(()=>{console.log("mongodb connected: (ノ^_^)ノ")})
+    .catch(err => {console.log("bruh mongo: " + err)});
     
 // AUTH
 app.post ('/auth/login',  loginValidaton, handleValidationErrors,UserController.login);
@@ -50,7 +50,7 @@ app.patch('/posts', checkAuth, PostController.update);
 // start server
 app.listen(3002, () => { 
     try{
-        console.log("сервер заработал (ノ^_^)ノ. порт 3002");
+        console.log("server started (ノ^_^)ノ. port 3002");
     }catch(err){
         console.log(err);
     }
