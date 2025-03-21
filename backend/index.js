@@ -2,13 +2,10 @@ import express from 'express';
 import multer from 'multer';
 import mongoose from 'mongoose';
 
-import { registerValidaton, loginValidaton } from './validations/authValidations.js';
-import { postValidation } from './validations/postValidations.js';
+import {loginValidaton, registerValidaton, postValidation} from './validations/index.js';
+import { handleValidationErrors, checkAuth } from './utils/index.js';
+import {UserController, PostController} from './controllers/index.js';
 
-import * as UserController from './controllers/UserController.js';
-import * as PostController from './controllers/PostController.js';
-
-import checkAuth from './utils/checkAuth.js';
 
 const app = express();
 
@@ -33,8 +30,8 @@ mongoose
     .catch(err => {console.log("монгос отьебнулся " + err)});
     
 // AUTH
-app.post ('/auth/login', loginValidaton, UserController.login);
-app.post ('/auth/register', registerValidaton, UserController.register);
+app.post ('/auth/login',  loginValidaton, handleValidationErrors,UserController.login);
+app.post ('/auth/register',  registerValidaton, handleValidationErrors, UserController.register);
 app.get('/auth/me', checkAuth , UserController.getMe);
 
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
