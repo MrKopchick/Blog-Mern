@@ -1,8 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { registerValidaton } from './validations/auth.js';
-import checkAuth from './utils/checkAuth.js';
+
+import { registerValidaton, loginValidaton } from './validations/authValidations.js';
+import { postValidation } from './validations/postValidations.js';
+
 import * as UserController from './controllers/UserController.js';
+import * as PostController from './controllers/PostController.js';
+
+import checkAuth from './utils/checkAuth.js';
 
 const app = express();
 app.use(express.json());
@@ -14,21 +19,25 @@ mongoose
     .catch(err => {console.log("монгос отьебнулся " + err)});
 
 
+    
+    
 // AUTH
-
-// login
-app.post ('/auth/login', UserController.login);
-// registration
+app.post ('/auth/login', loginValidaton, UserController.login);
 app.post ('/auth/register', registerValidaton, UserController.register);
-// get me
 app.get('/auth/me', checkAuth , UserController.getMe);
 
+// POSTS
+app.get('/posts', PostController.getAll);
+app.get('/posts/:id', PostController.getOne);
+app.post('/posts',checkAuth, postValidation, PostController.create);
+app.delete('/posts/:id',checkAuth, PostController.remove);
+app.patch('/posts', checkAuth, PostController.update);
 
 // start server
 app.listen(3002, () => { 
     try{
-        console.log("сервер заработал. заебись");
+        console.log("сервер заработал (ノ^_^)ノ. порт 3002");
     }catch(err){
-        console.log("пизда...:" + err);
+        console.log(err);
     }
 });
