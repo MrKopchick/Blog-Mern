@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import UserModel from './models/user.js';
+import UserModel from '../models/UserModel.js';
 
 
 export const register = async (req, res) => {
@@ -82,7 +82,6 @@ export const getMe = async (req, res) => {
 
         res.json({
             ...userData,
-            token
         });
     }catch(err){
         conso

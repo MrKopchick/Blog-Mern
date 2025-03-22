@@ -2,7 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import mongoose from 'mongoose';
 
-import {loginValidaton, registerValidaton, postValidation} from './validations/index.js';
+import { loginValidation, registerValidation, postValidation } from './validations/index.js';
 import { handleValidationErrors, checkAuth } from './utils/index.js';
 import {UserController, PostController} from './controllers/index.js';
 
@@ -10,13 +10,14 @@ import {UserController, PostController} from './controllers/index.js';
 const app = express();
 
 const storage = multer.diskStorage({
-    destination: (_, _, cb) => {
+    destination: (req, file, cb) => {  // исправлено
         cb(null, 'uploads'); 
     },
     filename: (_, file, cb) => {
         cb(null, file.originalname);
     }
 });
+
 
 const upload = multer({ storage });
 
@@ -30,8 +31,8 @@ mongoose
     .catch(err => {console.log("bruh mongo: " + err)});
     
 // AUTH
-app.post ('/auth/login',  loginValidaton, handleValidationErrors,UserController.login);
-app.post ('/auth/register',  registerValidaton, handleValidationErrors, UserController.register);
+app.post ('/auth/login',  loginValidation, handleValidationErrors,UserController.login);
+app.post ('/auth/register',  registerValidation, handleValidationErrors, UserController.register);
 app.get('/auth/me', checkAuth , UserController.getMe);
 
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {

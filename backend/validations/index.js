@@ -1,2 +1,2 @@
-export { registerValidaton, loginValidation} from "./authValidations.js";
-export { default as userValidations} from "./userValidations.js";
+export { registerValidation, loginValidation } from "./authValidations.js";
+export { postValidation } from "./postValidations.js";
