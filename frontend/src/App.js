@@ -1,3 +1,4 @@
+import {Routes} from "react-router-dom";
 import Container from "@mui/material/Container";
 
 import { Header } from "./components";
@@ -9,10 +10,13 @@ function App() {
       <Header />
       <Container maxWidth="lg">
         <Home />
-        {/*<FullPost />*/}
-        {/*<AddPost />*/}
-        {/*<Login />*/}
-        {/*<Registration />*/}
+          <Routes>
+            <Routes path = '/' element = {<Home />}/>
+            <Routes path = '/posts/:id' element = {<FullPost/>}/>
+            <Routes path = '/add-post' element = {<AddPost/>}/>
+            <Routes path = '/login' element = {<Login/>}/>  
+            <Routes path = '/register' element = {<Registration/>}/>
+          </Routes>
       </Container>
     </>
   );
