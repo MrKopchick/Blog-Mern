@@ -1,12 +1,10 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import UserModel from '../models/UserModel.js';
+import UserModel from '../models/User.js';
 
 
 export const register = async (req, res) => {
     try{
-        
-
         const password = req.body.password;
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
@@ -19,7 +17,7 @@ export const register = async (req, res) => {
         });
 
         const user = await document.save();
-        const token = jwt.sign({id: user._id}, 'secret123', { expiresIn: '30d'});
+        const token = jwt.sign({ id: user._id }, 'secret', { expiresIn: '30d' });
 
         const {passwordHash, ...userData} = user._doc;
         res.json({
@@ -53,7 +51,7 @@ export const login = async (req, res) => {
             })
         }
 
-        const token = jwt.sign({id: user._id}, 'secret123', { expiresIn: '30d'});
+        const token = jwt.sign({ _id: user._id }, 'secret', { expiresIn: '30d' });
 
         const {passwordHash, ...userData} = user._doc;
         res.json({
@@ -84,7 +82,6 @@ export const getMe = async (req, res) => {
             ...userData,
         });
     }catch(err){
-        conso
         res.status(500).json({
             message: 'немає доступу',
         });
