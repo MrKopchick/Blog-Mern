@@ -1,9 +1,9 @@
-import { red } from '@mui/material/colors';
-import {configuration} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { postReducer } from './slices/posts';
-const store = configuration({
+
+const store = configureStore({
     reducer:{
-        posts: postReducer
+        posts: postReducer,
     }
 })
 
