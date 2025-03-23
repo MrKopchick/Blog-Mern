@@ -7,6 +7,10 @@ import { loginValidation, registerValidation, postValidation } from './validatio
 import { handleValidationErrors, checkAuth } from './utils/index.js';
 import {UserController, PostController} from './controllers/index.js';
 
+import dotenv from 'dotenv';
+
+
+dotenv.config();
 
 const app = express();
 
@@ -44,11 +48,11 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
 });
 
 // POSTS
-app.get('/posts', PostController.getAll);
-app.get('/posts/:id', PostController.getOne);
-app.post('/posts',checkAuth, postValidation, PostController.create);
-app.delete('/posts/:id',checkAuth, PostController.remove);
-app.patch('/posts', checkAuth, PostController.update);
+app.get('/posts', PostController.getAll); //fixed
+app.get('/posts/:id', PostController.getOne); // fixed
+app.post('/posts',checkAuth, postValidation, PostController.create); // fixed
+app.delete('/posts/:id',checkAuth, PostController.remove); // fixed
+app.patch('/posts', checkAuth, PostController.update); 
 
 // start server
 app.listen(3002, () => { 
