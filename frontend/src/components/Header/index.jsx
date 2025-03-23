@@ -14,7 +14,7 @@ export const Header = () => {
     <div className={styles.root}>
       <Container maxWidth="lg">
         <div className={styles.inner}>
-          <Link className={styles.logo} href="/">
+          <Link className={styles.logo} to="/">
             <div>Толковий блог</div>
           </Link>
           <div className={styles.buttons}>
