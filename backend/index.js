@@ -48,11 +48,13 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
 });
 
 // POSTS
-app.get('/posts', PostController.getAll); //fixed
-app.get('/posts/:id', PostController.getOne); // fixed
-app.post('/posts',checkAuth, postValidation, PostController.create); // fixed
-app.delete('/posts/:id',checkAuth, PostController.remove); // fixed
-app.patch('/posts', checkAuth, PostController.update); 
+app.get('/tags', PostController.getLastTags); // ok
+app.get('/posts', PostController.getAll); //fixed, ok
+app.get('/posts/tags', PostController.getLastTags); // ok
+app.get('/posts/:id', PostController.getOne); // fixed, ok
+app.post('/posts',checkAuth, postValidation, PostController.create); // fixed, ok
+app.delete('/posts/:id',checkAuth, PostController.remove); // fixed, ok
+app.patch('/posts', checkAuth, PostController.update); // ok
 
 // start server
 app.listen(3002, () => { 
