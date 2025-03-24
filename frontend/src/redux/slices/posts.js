@@ -49,7 +49,7 @@ const postsSlice = createSlice({
         },
         [fetchTags.rejected]: (state) => {
             state.tags.items= [];
-            state.tafs.status = 'error';   
+            state.tags.status = 'error';   
         }
     }
 });
