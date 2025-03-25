@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate, useSelector } from "react-router-dom";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -29,11 +28,13 @@ export const Login = () => {
 
   const onSubmit = (values) => {
     dispatch(fetchAuth(values));
+    console.log("values", values);
+    console.log(isAuth);
   };
-
   if (isAuth) {
     return <Navigate to="/" />;
   }
+
   console.log(isAuth);
 
   return (
@@ -41,7 +42,7 @@ export const Login = () => {
       <Typography classes={{ root: styles.title }} variant="h5">
         Вход в аккаунт
       </Typography>
-      <form onSudmit = {handleSubmit(onSubmit)}>
+      <form onSubmit = {handleSubmit(onSubmit)}>
         <TextField
           className={styles.field}
           label="E-Mail"
@@ -58,7 +59,7 @@ export const Login = () => {
           {...register("password", { required: 'вкажіть пароль' })}  
           fullWidth 
         />
-        <Button type = "sudmit" size="large" variant="contained" fullWidth>
+        <Button type = "submit" size="large" variant="contained" fullWidth>
           Войти
         </Button>
       </form>
