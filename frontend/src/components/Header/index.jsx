@@ -12,10 +12,10 @@ export const Header = () => {
   const isAuth = useSelector(SelectIsAuth);
 
   const onClickLogout = () => {
-    if(window.confirm("ви дійсно хочете вийти?")){
-      window.localStorage.remove('token');
-      dispatch(logout());
-    }
+      if(window.confirm("Ви впевнені, що хочете вийти?")) {
+        window.localStorage.removeItem('token');
+        dispatch(logout());
+      }
   };
  
   return (
