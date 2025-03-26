@@ -2,6 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import fs from 'fs';
 
 import { loginValidation, registerValidation, postValidation } from './validations/index.js';
 import { handleValidationErrors, checkAuth } from './utils/index.js';
@@ -15,12 +16,15 @@ dotenv.config();
 const app = express();
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {  // исправлено
-        cb(null, 'uploads'); 
+    destination: (_, __, cb) => {
+        if (!fs.existsSync('uploads')) {
+            fs.mkdirSync('uploads');
+        }
+        cb(null, 'uploads');
     },
     filename: (_, file, cb) => {
         cb(null, file.originalname);
-    }
+    },
 });
 
 
@@ -43,7 +47,7 @@ app.get('/auth/me', checkAuth , UserController.getMe);
 
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
     res.json({
-        url: `/upload/${req.file.originalname}`
+      url: `/uploads/${req.file.originalname}`,
     });
 });
 
