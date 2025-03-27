@@ -90,13 +90,13 @@ export const AddPost = () => {
   return (
     <Paper style={{ padding: 30 }}>
       <Button onClick = {() => inputFileRef.current.click()} variant="outlined" size="large">
-        Загрузить картинку
+        загрузити картинку
       </Button>
       <input ref = {inputFileRef} type="file" onChange={handleChangeFile} hidden />
       {imageUrl && (
         <>
           <Button variant="contained" color="error" onClick={onClickRemoveImage}>
-            Удалить
+            видалити
           </Button>
           <img className={styles.image} src={`http://localhost:3002${imageUrl}`} alt="Uploaded" />
         </>
@@ -125,7 +125,7 @@ export const AddPost = () => {
       <SimpleMDE className={styles.editor} value={text} onChange={onChange} options={options} />
       <div className={styles.buttons}>
         <Button onClick = {onSubmit} size="large" variant="contained">
-          Опубликовать
+          Опублікувати
         </Button>
         <a href="/">
           <Button size="large">скасувати</Button>

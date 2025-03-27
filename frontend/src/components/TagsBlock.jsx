@@ -12,7 +12,7 @@ import { SideBlock } from "./SideBlock";
 
 export const TagsBlock = ({ items, isLoading = true }) => {
   return (
-    <SideBlock title="Тэги">
+    <SideBlock title="Тегі">
       <List>
         {(isLoading ? [...Array(5)] : items).map((name, i) => (
           <a
