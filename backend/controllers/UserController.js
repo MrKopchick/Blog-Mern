@@ -28,7 +28,6 @@ export const register = async (req, res) => {
         res.status(500).json({
             message: 'не вдалося зареєструватися. Щось не так з введеними даними',
         });
-        console.log(("у какогото долбойоба нехватило мозгов чтобы зарегистрировать себя"));
     }
 };
 
@@ -36,7 +35,6 @@ export const login = async (req, res) => {
     try{
         const user = await UserModel.findOne({email: req.body.email});
         if(!user){
-            console.log(`у какого то долбойоба не нашлась почта`);
             return res.status(404).json({
                message: 'Користувача не найдено' 
             });
@@ -45,7 +43,6 @@ export const login = async (req, res) => {
         const isValidPass = await bcrypt.compare(req.body.password, user.passwordHash);
 
         if(!isValidPass){
-            console.log(`у какого то долбойоба не нашелся пароль`);
             return res.status(403).json({
                 message: `невірний логін або пароль`
             })
@@ -62,7 +59,6 @@ export const login = async (req, res) => {
         res.status(500).json({
             message: 'не вдалося авторизуватися. Щось не так з введеними даними',
         });
-        console.log(("У какогото долбойоба нехватило мозгов чтобы авторизовать себя"));
     }
 };
 
