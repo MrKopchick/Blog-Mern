@@ -1,0 +1,27 @@
+{
+  "name": "blog-mern",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install:all": "concurrently \"cd frontend && npm install\" \"cd backend && npm install\"",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:frontend": "cd frontend && npm start && echo \"Frontend запущено успішно!\"",
+    "start:backend": "cd backend && npm run start:dev && echo \"\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrKopchick/Blog-Mern.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrKopchick/Blog-Mern/issues"
+  },
+  "homepage": "https://github.com/MrKopchick/Blog-Mern#readme",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
